@@ -5,10 +5,8 @@ namespace Camells;
 
 public abstract class Camell{
     private Rectangle PosicioR;
-    private readonly int Velocitat = 10;
     private Color colorcamell;
     private Image Skin;
-    private Random rnd = new();
     public Camell(Color color, Image imatge)
     {
         Skin = imatge;

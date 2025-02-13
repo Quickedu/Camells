@@ -1,12 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Heirloom;
+﻿using Heirloom;
 using Heirloom.Desktop;
 
 namespace Camells;
 
 class Program
 {
-    private static Window _window = null!;
+    private static Window _window;
     private static Game game;
 
     static void Main()
@@ -14,7 +13,7 @@ class Program
         Application.Run(() =>
         {
             // Crea la finestra
-            _window = new Window("Camells", (0,0)) { IsResizable = false };
+            _window = new Window("Camells") { IsResizable = false };
             _window.Maximize();
 
             game = new Game (_window);

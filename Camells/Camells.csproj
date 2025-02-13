@@ -6,7 +6,31 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
-
+    <ItemGroup>
+      <none Update="Objects/Camell/Image/Camell.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </none>
+    </ItemGroup>
+    <ItemGroup>
+      <none Update="Objects/BG/Image/BgStart.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </none>
+    </ItemGroup>
+    <ItemGroup>
+      <none Update="Objects/BG/Image/BgStart.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </none>
+    </ItemGroup>
+    <ItemGroup>
+      <none Update="Objects/BG/Image/BgGame.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </none>
+    </ItemGroup>
+    <ItemGroup>
+      <none Update="Objects/BG/Image/BgEnd.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </none>
+    </ItemGroup>
     <ItemGroup>
       <PackageReference Include="Heirloom.Desktop" Version="1.0.2-beta" />
     </ItemGroup>
