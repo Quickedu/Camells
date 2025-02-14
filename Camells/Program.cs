@@ -19,7 +19,7 @@ class Program
             game = new Game (_window);
             game.Load();
 
-            var loop = GameLoop.Create(_window.Graphics, OnUpdate, 120);
+            var loop = GameLoop.Create(_window.Graphics, OnUpdate, 60);
             loop.Start();
         });
     }

@@ -1,24 +1,20 @@
-using System.ComponentModel;
-using System.Formats.Asn1;
-using System.Net;
-using System.Security;
 using Heirloom;
-using Heirloom.Collections;
 using Heirloom.Desktop;
-
 namespace Camells;
 public class Game{
     private readonly Window _window;
     private Rectangle rect;
+    private Random random= new();
     private int status = 0;
     private int numero;
+    private int rnd = 0;
+    private int comencacarril = 300;
+    private int ampladacarril;
     private Image camelskin;
     private BG bg;
     private List <Image> bgskin = new();
-    private List <Camell> Jugadors = new();
     private List <Camell> Camel = new();
     private List <Carril> Carrils = new();
-    private int alturacarrils;
     public Game(Window finestra){
         _window = finestra;
     }   public void Run (GraphicsContext gfx, float dt){
@@ -48,6 +44,8 @@ public class Game{
         Camel.Insert(2,new CamelImparell(Color.Blue,camelskin));
         Camel.Insert(3,new CamelParell(Color.Cyan,camelskin));
         Camel.Insert(4,new CamelSprint(Color.Green,camelskin));
+        Camel.Insert(5,new CamelFondista(Color.Pink,camelskin));
+        Camel.Insert(6,new CamelTrampos(Color.Magenta,camelskin));
     }
     public void start (GraphicsContext gfx){
         bg.Spawn(gfx,bgskin[0],rect);
@@ -55,8 +53,12 @@ public class Game{
         gfx.DrawText("Quants jugadors vols?", (_window.Width/2,_window.Height/2-100),Font.Default,100,TextAlign.Center);
         gfx.DrawText($"{players}",(_window.Width/2,_window.Height/2+100),Font.Default,100,TextAlign.Center);
         if (Input.CheckKey(Key.Enter,ButtonState.Pressed)){
-            for (int i=0; i<Jugadors.Count;i++){
-                Carrils.Add(new Carril(((_window.Width,_window.Height),size:(_window.Width,100)),Camel[i])); //EDITAR, NO ESTA BÉ!!!!!
+            ampladacarril = (_window.Height-comencacarril)/players;
+            for (int i=0; i<players;i++){
+                Carrils.Add(new Carril(((0,comencacarril),size:(_window.Width,ampladacarril))));
+                Carrils[i].posiciocamel(Camel[rnd],comencacarril+ampladacarril);
+                comencacarril+=ampladacarril;
+                rnd = random.Next(1,Carrils.Count-1-i);
             }
             status = 1;
             Camel.Clear();
@@ -74,7 +76,7 @@ public class Game{
     }
     public int player(){
         Dictionary <Key,int> keymapping = new() {
-            {Key.Num2,2},{Key.Num3,3},{Key.Num4,4},{Key.Num5,5},{Key.Num6,6}
+            {Key.Num2,2},{Key.Num3,3},{Key.Num4,4},{Key.Num5,5},{Key.Num6,6},{Key.Num7,7}
 
         };
         foreach (var key in keymapping){

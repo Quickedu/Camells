@@ -5,7 +5,6 @@ using Heirloom.Collections;
 namespace Camells;
 
 public class CamelPlayer : Camell{
-    private Rectangle PosicioR;
     private readonly int Velocitat = 10;
     private Random rnd = new();
     public CamelPlayer(Color color, Image imatge) : base (color,imatge)
@@ -13,8 +12,8 @@ public class CamelPlayer : Camell{
     }
     public override void Move(GraphicsContext gfx){
         if (Input.CheckKey(Key.Space,ButtonState.Pressed)){
-            var go = rnd.Next(0,7);
-            PosicioR.X *= Velocitat+go;
+            var go = rnd.Next(7,13);
+            PosR.X += Velocitat+go;
         }
     }
 }

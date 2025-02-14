@@ -4,7 +4,9 @@ using Heirloom.Collections;
 namespace Camells;
 
 public abstract class Camell{
-    private Rectangle PosicioR;
+
+    protected Rectangle PosR;
+    public Rectangle PosicioR {get=> PosR; set => PosR=value;}
     private Color colorcamell;
     private Image Skin;
     public Camell(Color color, Image imatge)
@@ -18,7 +20,4 @@ public abstract class Camell{
         gfx.Color = Color.White;
     }
     public abstract void Move(GraphicsContext gfx);
-    public void position(Rectangle pista){
-        PosicioR = ((pista.X+pista.Width,pista.Y+pista.Height),PosicioR.Size);
-    }
 }
