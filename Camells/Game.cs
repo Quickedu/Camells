@@ -5,19 +5,23 @@ public class Game{
     private readonly Window _window;
     private Rectangle rect;
     private Random random= new();
-    private int status = 0;
     private int numero;
+    Camell guanyador;
     private int rnd = 0;
     private int comencacarril = 300;
     private int ampladacarril;
     private Image camelskin;
     private BG bg;
+    private Type winner;
     private List <Image> bgskin = new();
     private List <Camell> Camel = new();
     private List <Carril> Carrils = new();
+    private List <Camell> Camellstotal = new();
+    private int status = 0; // 0 start - 1 Game - 2 End
     public Game(Window finestra){
         _window = finestra;
-    }   public void Run (GraphicsContext gfx, float dt){
+    }   
+    public void Run (GraphicsContext gfx, float dt){
         rect = new Rectangle ((0,0),_window.Size);
         switch (status){
             case 0 :
@@ -28,6 +32,9 @@ public class Game{
             break;
             case 2:
             end(gfx);
+            break;
+            case 3:
+            calculguanyador();
             break;
             default:
             status = 1;
@@ -54,14 +61,24 @@ public class Game{
         gfx.DrawText($"{players}",(_window.Width/2,_window.Height/2+100),Font.Default,100,TextAlign.Center);
         if (Input.CheckKey(Key.Enter,ButtonState.Pressed)){
             ampladacarril = (_window.Height-comencacarril)/players;
+            foreach (var llista1 in Camel){
+                Camellstotal.Add(llista1);
+            }
             for (int i=0; i<players;i++){
                 Carrils.Add(new Carril(((0,comencacarril),size:(_window.Width,ampladacarril))));
                 Carrils[i].posiciocamel(Camel[rnd],comencacarril+ampladacarril);
+                Camel.RemoveAt(rnd);
                 comencacarril+=ampladacarril;
-                rnd = random.Next(1,Carrils.Count-1-i);
+                if (Camel.Count-1 >=0){
+                    rnd = random.Next(0,Camel.Count-1);
+                    continue;
+                    }
+                    rnd=0;
             }
             status = 1;
-            Camel.Clear();
+            Camellstotal.Clear();
+            rnd = 0;
+            comencacarril=300;
             return;
         }
     }
@@ -69,10 +86,34 @@ public class Game{
         bg.Spawn(gfx,bgskin[1],rect);
         foreach(var carril in Carrils){
             carril.Spawn(gfx);
+            if (carril.final){
+                status = 3;
+            }
         }
+
+    }
+    public void calculguanyador(){
+        var mesgran = 0.0; 
+        foreach (var cam in Carrils){
+            var chosed = cam.GetCamell();
+            if (chosed.PosicioR.Right>mesgran){
+                mesgran=chosed.PosicioR.Right;
+                guanyador = chosed;
+            }
+        }
+        winner = guanyador.GetType();
+        status = 2;
     }
     public void end(GraphicsContext gfx){
-
+        bg.Spawn(gfx,bgskin[0],rect);
+        gfx.Color = Color.Black;
+        gfx.DrawText($"{winner.Name} ha guanyat!!!",(rect.Width/2,rect.Height/2-100),Font.Default,100,TextAlign.Center);
+        gfx.DrawText($"Prem espai per tornar a jugar",(rect.Width/2,rect.Height/2+100),Font.Default,100,TextAlign.Center);
+        gfx.Color = Color.White;
+        if (Input.CheckKey(Key.Enter,ButtonState.Pressed)){
+            status = 0;
+            Carrils.Clear();
+            }
     }
     public int player(){
         Dictionary <Key,int> keymapping = new() {
