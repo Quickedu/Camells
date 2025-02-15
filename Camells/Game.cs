@@ -57,9 +57,11 @@ public class Game{
     public void start (GraphicsContext gfx){
         bg.Spawn(gfx,bgskin[0],rect);
         var players = player();
+        gfx.Color=Color.Black;
         gfx.DrawText("Quants jugadors vols?", (_window.Width/2,_window.Height/2-100),Font.Default,100,TextAlign.Center);
         gfx.DrawText($"{players}",(_window.Width/2,_window.Height/2+100),Font.Default,100,TextAlign.Center);
-        if (Input.CheckKey(Key.Enter,ButtonState.Pressed)){
+        gfx.Color=Color.White;
+        if (Input.CheckKey(Key.Enter,ButtonState.Pressed)&& players!=0){
             ampladacarril = (_window.Height-comencacarril)/players;
             foreach (var llista1 in Camel){
                 Camellstotal.Add(llista1);
@@ -76,9 +78,6 @@ public class Game{
                     rnd=0;
             }
             status = 1;
-            Camellstotal.Clear();
-            rnd = 0;
-            comencacarril=300;
             return;
         }
     }
@@ -113,6 +112,9 @@ public class Game{
         if (Input.CheckKey(Key.Enter,ButtonState.Pressed)){
             status = 0;
             Carrils.Clear();
+            Camellstotal.Clear();
+            rnd = 0;
+            comencacarril=300;
             }
     }
     public int player(){
