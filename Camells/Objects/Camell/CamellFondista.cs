@@ -10,9 +10,11 @@ public class CamelFondista : Camell{
     {
     }
     public override void Move(GraphicsContext gfx){
-        canIgo *= -1;
-        if (canIgo == -1)return;
-        var go = rnd.Next(0,1);
-        PosR.X += Velocitat+go;
+        canIgo++;
+        if (canIgo == 6){
+            var go = rnd.Next(0,1);
+            PosR.X += Velocitat+go;
+            canIgo=1;
+        }
     }
 }
