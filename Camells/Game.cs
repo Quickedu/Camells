@@ -80,6 +80,10 @@ public class Game{
             status = 1;
             return;
         }
+        if (Input.CheckKey(Key.Escape, ButtonState.Pressed)){
+            _window.Close();
+            return;
+        } 
     }
     public void game (GraphicsContext gfx){
         bg.Spawn(gfx,bgskin[1],rect);
@@ -89,6 +93,10 @@ public class Game{
                 status = 3;
             }
         }
+        if (Input.CheckKey(Key.Escape, ButtonState.Pressed)){
+            _window.Close();
+            return;
+        } 
     }
     public void calculguanyador(){
         var mesgran = 0.0; 
@@ -107,6 +115,7 @@ public class Game{
         gfx.Color = Color.Black;
         gfx.DrawText($"{winner.Name} ha guanyat!!!",(rect.Width/2,rect.Height/2-100),Font.Default,100,TextAlign.Center);
         gfx.DrawText($"Prem Enter per tornar a jugar",(rect.Width/2,rect.Height/2+100),Font.Default,100,TextAlign.Center);
+        gfx.DrawText($"Prem Escape per sortir del joc",(rect.Width/2,rect.Height/2+250),Font.Default,100,TextAlign.Center);
         gfx.Color = Color.White;
         if (Input.CheckKey(Key.Enter,ButtonState.Pressed)){
             status = 0;
@@ -122,7 +131,11 @@ public class Game{
             Camel.Insert(4,new CamelSprint(Color.Green,camelskin));
             Camel.Insert(5,new CamelFondista(Color.Pink,camelskin));
             Camel.Insert(6,new CamelTrampos(Color.Magenta,camelskin));
-            }
+        }
+        if (Input.CheckKey(Key.Escape, ButtonState.Pressed)){
+            _window.Close();
+            return;
+        } 
     }
     public int player(){
         Dictionary <Key,int> keymapping = new() {
